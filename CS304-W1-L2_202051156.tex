@@ -1,0 +1,220 @@
+\documentclass[11pt]{article}
+\usepackage[hmargin=1in,vmargin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,amsfonts,url,sectsty,framed,tcolorbox,framed}
+\usepackage{multicol}
+\setlength{\columnsep}{0.5cm}
+\usepackage{blindtext}
+\usepackage{tikz}
+
+\newcommand{\pf}{{\bf Proof: }}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newcommand{\qed}{\hfill \rule{2mm}{2mm}}
+
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent
+\rule{\textwidth}{1pt}
+\begin{center}
+{\bf [CS304] Introduction to Cryptography and Network Security}
+\end{center}
+Course Instructor: Dr. Dibyendu Roy \hfill Winter 2022-2023\\
+Scribed by: Rathva Kaushikkumar Sanjaybhai (202051156) \hfill Week : 1 (2nd lecture \#)
+\\
+\rule{\textwidth}{1pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%write here
+\section{One way function}
+Using one way funtion we can easily findout the output from input.
+But doing the otherway arround is computationaly difficult task.
+
+\paragraph{Example : }For given two large prime numbers multiplication is a oneway function.
+We can easily calculate answer to multiplication of amy two numbers in polinomial time.
+But calculting back the prime numbers from the ouput.We have to facturize it in prime numbers to do that and it's computationally intensive task.
+
+\section{Substitution box : }
+ It's a function from $ A \rightarrow B $
+where $|B| \le |A|$ \newline
+
+example : \newline
+$S1 : \{1,2,3,4\} \rightarrow \{1,2,3\}$ \newline
+
+$S1(1) = 1 \  ,\   
+S1(2) = 3 \  , \  
+S1(3) = 2 \  , \  
+S1(1) = 4$
+
+\section{Transposition Cipher :}
+This is a function which is mapped from domain to co-domain.\\\\
+\textbf{Example :} $M = m_1 \  m_2 \ m_3 \  .\  .\  .\  m_t $ \\
+ Here, M is plain text. \\
+e : permutation on t elements $\rightarrow{}$ Secret\  key. \\\\
+Encryption :\ $C = m_{e(1)} \ m_{e(2)} \ m_{e(3)} \ . \ . \ . m_{e(t)} $ \\
+Here, C is cipher text.\\\\
+Decryption :\ $n = C_{e^{-1}(1)} \ C_{e^{-1}(2)} \ C_{e^{-1}(3)} \ .\ .\ .\ C_{e^{-1}(t)}$\\
+Here, n is the plain text that is decrypted from cipher text.
+\newpage
+
+\section{Permutation :}
+\textbf{Example} : \\
+C A E S A R = $m_1\ m_2\ m_3\ .\ .\ .\ m_6$ \\\\
+
+$e\ : \{ \begin{array}{cccccc}
+     1 & 2 & 3 & 4 & 5 & 6 \\
+     6 & 4 & 1 & 3 & 5 & 2
+\end{array}
+\}_{Encryption}$
+\\\\
+Cipher text = R S C E A A = \ $C_1\ C_2\ C_3\ .\ .\ .\ C_6$ \\
+
+$d = e^{-1}$\ :\  \{$\begin{array}{cccccc}
+     1 & 2 & 3 & 4 & 5 & 6 \\
+     3 & 6 & 4 & 2 & 5 & 1
+\end{array}\}_{Decryption}$
+\\\\
+Plain text : C A E S A R
+
+\section{Substitution Cipher : }
+M =\ $m_1 \  m_2 \ m_3 \  .\  .\  .\  m_t $\\
+A = \(a,b,c,d,...,z\)\ $M_i$\ $\epsilon$\ A \\\\
+e : substitution from A to A.\\
+e $\xrightarrow{}$ secret key. \\\\
+ex. e(a) = z , e(b) = d , e(c) = a \\
+a b c $\xrightarrow{}$ plain text \\
+z d a $\xrightarrow{}$ cipher text
+
+\begin{multicols}{2}
+[\section{Affine cipher :}]
+$A\ \rightarrow \ 0$ \\
+$B\ \rightarrow \ 1$ \\
+$C\ \rightarrow \ 2$ \\
+.\\
+.\\
+.\\
+$Z\ \rightarrow \ 25$ \\
+
+\columnbreak
+\subsection{Encryption function:}
+$C\ =\ e(x,k)\ =\ (a \* x+b)mod\ 26\ =c$\\
+where,\ $a,b,c\ \epsilon\ Z_{26}$
+
+\subsection{Decryption function:}
+$X\ =\ d(c,k)\ =\ ((c - b)a^{-1})mod\ 26\ =c$\\
+\end{multicols}
+\newpage
+\subsection{Exapmple :}
+$Z_6 = {0,1,2,3,4,5}\ \ \ x,y \ \epsilon \ Z_6 $
+\begin{multicols}{2}
+$ + \ mod \ 6 \ :\ +_6 \rightarrow \ Z = (x+y)%6 $
+\\\\
+
+$\begin{array}{ccccccc}
++_6 | & 0 & 1 & 2 & 3 & 4 & 5 \\
+\hline
+0\ | & 0 & 1 & 2 & 3 & 4 & 5 \\
+1\ | & 1 & 2 & 3 & 4 & 5 & 0 \\
+2\ | & 2 & 3 & 4 & 5 & 0 & 1 \\
+3\ | & 3 & 4 & 5 & 0 & 1 & 2 \\
+4\ | & 4 & 5 & 0 & 1 & 2 & 3 \\
+5\ | & 5 & 0 & 1 & 2 & 3 & 4
+\end{array}$
+
+\\\\\\
+
+$0\ne x \ \epsilon \ Z_6 $ \\
+if $gcd(x,6)=1$ \\
+then $\exist y $ such that \\
+$x*_6y\ =\ 1$
+
+\columnbreak
+
+$ *_6 \  :\ (x*y)= Z%6 = y = x*_6y $ \\\\
+
+$\begin{array}{lllllll}
+*_6\ | & 0 & 1 & 2 & 3 & 4 & 5 \\
+\hline
+0\  |& 0 & 0 & 0 & 0 & 0 & 0 \\
+1\  |& 0 & 1 & 2 & 3 & 4 & 5 \\
+2\  |& 0 & 2 & 4 & 0 & 2 & 4 \\
+3\  |& 0 & 3 & 0 & 3 & 0 & 3 \\
+4\  |& 0 & 4 & 2 & 0 & 4 & 2 \\
+5\  |& 0 & 5 & 4 & 3 & 2 & 1
+\end{array}$
+
+\\\\\\
+
+$0\ne x \ \epsilon \ Z_m $ \\
+if $gcd(x,m)=1$ \\
+then $\exist y $ such that \\
+$x*_my\ =\ 1$
+
+\end{multicols}
+
+for m and (xy - 1)\\
+$xy\ -\ 1\ =\ tm$ \\
+$1\ =\ t_1m\ +\ xy$ \ \ $t_1\ =\ (-t)$
+\\\\\\
+gcd(x,m) = ax + bm \\
+\\\\
+\textbf{Example : } m=7,x=3 \\\\
+extended euclidion algo.\\\\
+$ 1 = am+yz \\
+1=3-(1X2)\\
+=3+(-1X2)\\
+=3+(-1)17+5X3\\
+=6X3+(-1)X17\\\\
+so, y=6,x=3,t=1,m=17.
+$
+
+
+\newpage
+
+
+\section{Playfair cipher :}
+
+secret key = playfair example \\
+Here we are taking 5x5 matrix so we only have 25 distinct alphabets.So we are taking I=J.\\
+Steps 
+\begin{enumerate}
+    \item Make a 5x5 matrix and add alphabets of secret key such that alphabets don't repeat.
+       \\\\
+       $\begin{array}{ccccc}
+        P & L & A & Y & F \\
+        I & R & E & X & M \\
+        - & - & - & - & - \\
+        - & - & - & - & - \\
+        - & - & - & - & -
+        \end{array}$
+    \\
+    \item Fill all the remaining alphabets in lexicographical order such that they don't repeat.
+    \\\\
+        $\begin{array}{ccccc}
+        \hline
+        |\ P & L & A & Y & F\ | \\
+        |\ I & R & E & X & M\ | \\
+        \hline
+        B & C & D & G & H \\
+        K & N & O & Q & S \\
+        T & U & V & W & Z
+        \end{array}$
+    \\\\
+    Here we have taken plain text HIDE.\\
+
+    \item Break text into groups of 2 alphabets and if their are odd no of letters append z at the end.
+    \item Now for the group mark both letters on the table and replace them with letters in same row relatively of the rectangle made by the group's letters.
+    \item If both letters are in same row/column replace them with next element in circular meaner.\\
+
+    For plain text HIDE \ $\rightarrow$ HI DE \\
+    HI  DE\\
+    $\ \ \downarrow\ \ \ $ \ $\downarrow$ \\
+    BM  OD
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

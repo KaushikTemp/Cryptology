@@ -1,0 +1,167 @@
+\documentclass[11pt]{article}
+\usepackage[hmargin=1in,vmargin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,amsfonts,url,sectsty,framed,tcolorbox,framed}
+\usepackage{multicol}
+\setlength{\columnsep}{0.5cm}
+\usepackage{blindtext}
+\usepackage{tikz}
+
+\newcommand{\pf}{{\bf Proof: }}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newcommand{\qed}{\hfill \rule{2mm}{2mm}}
+
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent
+\rule{\textwidth}{1pt}
+\begin{center}
+{\bf [CS304] Introduction to Cryptography and Network Security}
+\end{center}
+Course Instructor: Dr. Dibyendu Roy \hfill Winter 2022-2023\\
+Scribed by: Rathva Kaushikkumar Sanjaybhai (202051156) \hfill Week : 1 (1st lecture\#)
+\\
+\rule{\textwidth}{1pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%write here
+
+\section[short]{Cryptology:}
+\subsection{Parts of Cryptology:}
+
+\begin{definition}
+\underline{{Cryptography}} : 
+We develop/design algorith to make system secure.  
+\end{definition}
+
+\begin{definition}
+    \underline{{Cryptoanalysis}} : We try to penetrate the security of system.
+
+\end{definition}
+
+\begin{definition}
+    {Cryptology = Cryptography + Cryptoanalysis.}    
+\end{definition}
+
+\begin{remark}
+    {NIST}(National Institute of Standards and Technology) 
+    is a Institution that Standardizes Cryptographic Algorithms.    
+\end{remark}    
+
+\section{Encription and Decryption}
+\begin{multicols}{2}
+
+    \subsection{Encription}
+    
+    Encription can be defined by {\underbar{\(E(P,k)=C\)}}.\newline
+    Encription is process to convert/transform plain
+    (readable\footnote[2]{it's meaning is known by reading it and can be used directly where it's intended.})
+    text into
+    cipher(unreadable
+    \footnote[3]{it's meaning can't known by reading it and can't used as intended directly.})
+     text.
+    
+    \subsection{Decryption}
+    Decryption can be defined by {\underbar{\(D(C,k)=P\)}}. \newline
+    Decryption is process to convert/transform cipher text to plain text.
+    \newline\newline
+    Where, \newline
+    $P = Plain text$ \newline
+    $C = Cipher text$ \newline
+    $k = Secret key$ \newline
+
+    \columnbreak
+
+    \subsection{Example:}
+
+    ATM 1 $\rightarrow$ PIN 1 + X = Y1  \newline
+    ATM 2 $\rightarrow$ PIN 2 + X = Y2  \newline
+    ATM 3 $\rightarrow$ PIN 3 + X = Y3  \newline
+    . \newline
+    . \newline
+    . \newline
+    ATM 10 $\rightarrow$ PIN 10 + X = Y10 \newline
+
+    \begin{remark}
+        Here,$X \rightarrow Secret$
+    \end{remark}
+\end{multicols}
+
+\newpage
+
+
+\section{Cryptography :}
+\begin {multicols}{2}
+\subsection{Symetric key cryptograpy }
+Both Encryption and Decryption keys are the same in this type of cryptography.
+\newline
+Encryption : $E(P,k)=C$<\newline
+Decrytion : $D(C,k)=P$ \newline
+
+Where , \newline
+$P = plain text,$
+
+\columnbreak
+\subsection{Public key cryptograpy}
+Encryption and Decryption keys are diffrent but both are related.\newline
+
+There are two keys :
+\begin{enumerate}
+    \item Public key : which can be seen by anyone.
+    \item Secret key : This key is kept secret and known reciever.This key is related to public key.
+\end{enumerate}
+
+
+\end{multicols}\\\\
+
+\section{Cryptography provides following security services :-}
+\begin{multicols}{2}
+\subsection{Confidentiality(Secrecy) : }
+\paragraph{}{It means that the massage is only known or understood by desired people.}
+
+    \subsubsection{Plain text :}original massage.
+    \subsubsection{Encription Algorithms :} function
+    \subsubsection{Decryption Algorithm :} function
+    \subsubsection{Cipher text :} un-readable form of plain text.
+    \subsubsection{Encription key :} key
+    \subsubsection{Decryption key :} key
+
+\columnbreak
+
+\subsection{Integrity}
+\paragraph{}{Integrity means Text on both \underbar{Sender} and the 
+    \underbar{Receiver} end is same.}
+\subsection{Authentication}
+\paragraph{}{Authentication is a process to identify desired person.}
+\subsection{Non-repudiation}
+\paragraph{}{A mechanism to prove that sender sent the message.}
+\end{multicols}
+
+\newpage
+
+\section{CAESAR cipher :}
+This cipher is named after \underline{Julius caesar}.It works by shifting letters of mases by an agreed number.\\
+ Here we are taking agreed number =3.\\\\
+ If we give/map all alphabet a number staring from 0.\\
+ A $\rightarrow$ 0,
+ B $\rightarrow$ 1,
+ C $\rightarrow$ 2,
+ .
+ .
+ .,
+ Z $\rightarrow$ 25\\
+ \\
+ while Encrypting shift right all the letters by 3.\\\\
+ plain text  $\rightarrow$ INTERNET\\
+ agreed number = 3 $\rightarrow$ secret key \\
+ Cipher text $\rightarrow$ LQWHUQHW\\\\
+ while Decrypting shift left all the letters by 3.\\\\
+Plain text $\rightarrow$ INTERNET\\
+\end{document}
+
