@@ -5,9 +5,9 @@ char plainText[]="rathvakaushik";
 int text_length = sizeof(plainText)/sizeof(char)-1;
 int p=0;
 char playfair[5][5];
-bool existInPlayfair(char c);
 
-void makePlayfair(char *str);
+bool existIn_Playfair(char c);
+void make_Playfair(char *str);
 void init_playFair();
 void print_playfair();
 
@@ -41,7 +41,7 @@ bool existInPlayfair(char c){
     return false;
 }
 
-void makePlayfair(char *str){
+void make_Playfair(char *str){
     for(int i=0;i<=text_length;i++){
         if(!existInPlayfair(str[i])){
             playfair[p/5][p%5]=str[i];
