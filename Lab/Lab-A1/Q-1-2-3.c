@@ -14,7 +14,7 @@ void print_playfair();
 int main(){
     init_playFair();
 
-    makePlayfair(plainText);
+    make_Playfair(plainText);
 
 
     printf("Q3 : %s\n\n",playfair);
