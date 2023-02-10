@@ -5,7 +5,7 @@
  * input - plain text (16 bit int)
  * output - cipher text (16 bit int)
  */
-__uint16_t sbox_function(__uint16_t text);
+__uint16_t sbox_Function(__uint16_t text);
 
 /*
  * round key generator function
@@ -25,6 +25,22 @@ __uint16_t roundKeyGenerator(__uint32_t secert_key,int round_no);
 __uint16_t permute(__uint16_t text);
 
 /*
+ * SPN encryption
+ * input - plain text (16 bit int)
+ * input - 32 bit secret key
+ * output - encrypted text
+ */
+__uint16_t spnEnc(__uint16_t plain_text,__uint32_t secret_key);
+
+/*
+ * SPN Decryption
+ * input - cipher text (16 bit int)
+ * input - 32 bit secret key
+ * output - Decrypted text
+ */
+__uint16_t spnDEC(__uint16_t cipher_text,__uint32_t secret_key);
+
+/*
  * s_box array
  * s[i] is a mapping from i -> s[i]
  *
@@ -33,6 +49,17 @@ __uint8_t s_box[16] = {0x0E,0x04,0x0D,0x01,
                         0x02,0x0F,0x0B,0x08,
                         0x03,0x0A,0x06,0x0C,
                         0x05,0x09,0x00,0x07};
+
+/*
+ * inverse s_box array
+ * s[i] is a mapping from s[i] -> i
+ *
+ */
+__uint8_t inv_s_box[16] = {0x0E,0x03,0x04,0x08,
+                           0x01,0x0C,0x0A,0x0F,
+                           0x07,0x0A,0x09,0x06,
+                           0x0B,0x0F,0x00,0x05};
+
 
 /*
  * permutation table
@@ -63,27 +90,8 @@ __uint16_t nth_bit[16] = {
     0b0000000000000001  //sixteenth bit
 };
 
-/*
- * SPN encryption
- * input - char input
- * input2 - length of input 
- * input3 - 32 bit secret key
- * output - encrypted text
- */
-__uint16_t SPN(char text[],int len,__uint32_t secret_key);
 
-
-int main(){
-    __uint32_t secret_key = 0x22485211;
-    __uint16_t text = "thisiskavi";
-
-    SPN(text, secret_key);
-
-    return 0;
-    
-}
-
-__uint16_t sbox_function(__uint16_t text){
+__uint16_t sboxFunction(__uint16_t text){
     /*array 0f size 4 for sbox*/
     __uint8_t s[4];
 
@@ -146,10 +154,40 @@ __uint16_t permute(__uint16_t text){
     return permuted_text;
 }
 
-__uint16_t SPN(char text[],int len,__uint32_t secret_key){
-    char cipher_text[len];
-    for(int i=0;i< len/2 ;i++){
-        
-    }
+__uint16_t spnEnc(__uint16_t plain_text,__uint32_t secret_key){
+    __uint16_t cipher_text = plain_text;
+    __uint16_t round_key=0;
+
+    // for(int j=0;j<3;j++){
+    //     round_key = roundKeyGenerator(secret_key,i+1);
+    //     cipher_text = cipher_text ^ round_key;
+    //     cipher_text = sboxFunction(cipher_text);
+    //     cipher_text = permute(cipher_text);
+    // }   
+
+    round_key = roundKeyGenerator(secret_key,4);
+    cipher_text = cipher_text ^ round_key;
+    cipher_text = sboxFunction(cipher_text);
+
+    round_key = roundKeyGenerator(secret_key,5);
+
+    cipher_text = cipher_text ^ round_key;
+
     return cipher_text;
+}
+
+
+
+int main(){
+    __uint32_t secret_key = 0x22485211;
+    __uint16_t plain_text = 0x4852;
+    
+    __uint16_t cipher_text = spnEnc(plain_text,secret_key);
+
+    printf("cipher text : %x\n",cipher_text);
+
+    printf("decrypted text : %x\n",spnEnc(cipher_text,secret_key));
+
+    return 0;
+    
 }
