@@ -7,23 +7,24 @@ int p=0;
 char playfair[5][5];
 
 bool existIn_Playfair(char c);
-void make_Playfair(char *str);
+void make_Playfair(char *str,int text_length);
 void init_playFair();
 void print_playfair();
 
 int main(){
     init_playFair();
 
-    make_Playfair(plainText);
+    make_Playfair(plainText,text_length);
 
 
     printf("Q3 : %s\n\n",playfair);
 
-    //for(int i=0;i<=26;i++){
-     //   if(i=='j'-'a'){i++;}
-       // char t = 'a'+i;
-       // makePlayfair(t);
-    //}
+    char t[1];
+    for(int i='a';i<='z';i++){
+        if(i=='j'){i++;}
+        t[0]=i;
+        make_Playfair(t,1);
+    }
 
 
     printf("Q5 :\n");
@@ -41,7 +42,7 @@ bool existInPlayfair(char c){
     return false;
 }
 
-void make_Playfair(char *str){
+void make_Playfair(char *str,int text_length){
     for(int i=0;i<=text_length;i++){
         if(!existInPlayfair(str[i])){
             playfair[p/5][p%5]=str[i];

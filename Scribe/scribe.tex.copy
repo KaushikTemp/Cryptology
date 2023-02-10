@@ -1,0 +1,21 @@
+\documentclass{handout}
+
+\usepackage{epsfig}
+
+\lecturenumber{*} % write here the number of the lecture you are scribing
+\lecturedate{day month year} % write here the date of the lecture
+\title{*} % write here the title of the lecture
+\scribe{*} % write your name here
+
+\begin{document}
+
+\maketitle
+
+% Write everything here.
+
+
+\begin{thebibliography}{9}
+% place your bibliography items here
+\end{thebibliography}
+
+\end{document}
