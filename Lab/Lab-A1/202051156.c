@@ -228,7 +228,7 @@ __uint16_t spnDec(__uint16_t cipher_text,__uint32_t secret_key){
 
 int main(){
     __uint32_t secret_key = 0x224F5D11;
-    __uint16_t plain_text = (__uint16_t)"KA";
+    __uint16_t plain_text = 0xFACE;
     
     printf("plain text : %x \n",plain_text);
     __uint16_t cipher_text = spnEnc(plain_text,secret_key);
