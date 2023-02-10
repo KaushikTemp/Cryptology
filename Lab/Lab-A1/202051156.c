@@ -38,14 +38,14 @@ __uint16_t spnEnc(__uint16_t plain_text,__uint32_t secret_key);
  * input - 32 bit secret key
  * output - Decrypted text
  */
-__uint16_t spnDEC(__uint16_t cipher_text,__uint32_t secret_key);
+__uint16_t spnDec(__uint16_t cipher_text,__uint32_t secret_key);
 
 /*
  * s_box array
  * s[i] is a mapping from i -> s[i]
  *
  */
-__uint8_t s_box[16] = {0x0E,0x04,0x0D,0x01,
+__uint8_t sbox[16] = {0x0E,0x04,0x0D,0x01,
                         0x02,0x0F,0x0B,0x08,
                         0x03,0x0A,0x06,0x0C,
                         0x05,0x09,0x00,0x07};
@@ -55,10 +55,10 @@ __uint8_t s_box[16] = {0x0E,0x04,0x0D,0x01,
  * s[i] is a mapping from s[i] -> i
  *
  */
-__uint8_t inv_s_box[16] = {0x0E,0x03,0x04,0x08,
+__uint8_t inv_sbox[16] = {0x0E,0x03,0x04,0x08,
                            0x01,0x0C,0x0A,0x0F,
                            0x07,0x0A,0x09,0x06,
-                           0x0B,0x0F,0x00,0x05};
+                           0x0B,0x02,0x00,0x05};
 
 
 /*
@@ -91,7 +91,7 @@ __uint16_t nth_bit[16] = {
 };
 
 
-__uint16_t sboxFunction(__uint16_t text){
+__uint16_t sboxFunction(__uint16_t text ,__uint8_t sbox[]){
     /*array 0f size 4 for sbox*/
     __uint8_t s[4];
 
@@ -107,7 +107,7 @@ __uint16_t sboxFunction(__uint16_t text){
 
     /*substituting value of this 4 sboxes*/
     for(int i=0;i<4;i++){
-        s[i] = s_box[s[i]];
+        s[i] = sbox[s[i]];
     }
 
     /*returning int concatinating 4 sboxes*/
@@ -155,38 +155,85 @@ __uint16_t permute(__uint16_t text){
 }
 
 __uint16_t spnEnc(__uint16_t plain_text,__uint32_t secret_key){
-    __uint16_t cipher_text = plain_text;
+    __uint16_t encrypted_text = plain_text;
     __uint16_t round_key=0;
 
-    // for(int j=0;j<3;j++){
-    //     round_key = roundKeyGenerator(secret_key,i+1);
-    //     cipher_text = cipher_text ^ round_key;
-    //     cipher_text = sboxFunction(cipher_text);
-    //     cipher_text = permute(cipher_text);
-    // }   
+    for(int j=0;j<3;j++){
+        round_key = roundKeyGenerator(secret_key,j+1);
+
+        printf("round %d input text : %x, round %d key : %x \n",j+1,encrypted_text,j+1,round_key); 
+
+        encrypted_text = encrypted_text ^ round_key;
+        encrypted_text = sboxFunction(encrypted_text,sbox);
+        encrypted_text = permute(encrypted_text);
+    }   
+
+    /*round 4*/
 
     round_key = roundKeyGenerator(secret_key,4);
-    cipher_text = cipher_text ^ round_key;
-    cipher_text = sboxFunction(cipher_text);
 
+
+    printf("round 3 out : %x , round 4 key : %x \n",encrypted_text,round_key);
+
+    encrypted_text = encrypted_text ^ round_key;
+    encrypted_text = sboxFunction(encrypted_text,sbox);
+
+    /*round 5*/
     round_key = roundKeyGenerator(secret_key,5);
 
-    cipher_text = cipher_text ^ round_key;
+    printf("round 4 out : %x , round 5 key : %x \n\n",encrypted_text,round_key);
 
-    return cipher_text;
+
+    encrypted_text = encrypted_text ^ round_key;
+
+    return encrypted_text;
+}
+
+__uint16_t spnDec(__uint16_t cipher_text,__uint32_t secret_key){
+    __uint16_t decrypted_text = cipher_text;
+    __uint16_t round_key=0;
+
+    round_key = roundKeyGenerator(secret_key,5);
+    
+    /*round 1*/
+    printf("round 1 key : %x \n",round_key);
+    decrypted_text = decrypted_text ^ round_key;
+
+    
+
+    /*round 2*/
+
+    round_key = roundKeyGenerator(secret_key,4);
+
+    printf("round 1 out : %x , round 2 key : %x \n",decrypted_text,round_key);
+
+    decrypted_text = sboxFunction(decrypted_text,inv_sbox);
+    decrypted_text = decrypted_text ^ round_key;
+    
+    for(int j=3;j>0;j--){
+        round_key = roundKeyGenerator(secret_key,j);
+
+        printf("round %d input text : %x, round %d key : %x \n",j, decrypted_text,j,round_key);
+
+        decrypted_text = permute(decrypted_text);
+        decrypted_text = sboxFunction(decrypted_text,inv_sbox);
+        decrypted_text = decrypted_text ^ round_key;
+    }   
+
+    return decrypted_text;
 }
 
 
-
 int main(){
-    __uint32_t secret_key = 0x22485211;
+    __uint32_t secret_key = 0x224F5D11;
     __uint16_t plain_text = 0x4852;
     
+    printf("plain text : %x \n",plain_text);
     __uint16_t cipher_text = spnEnc(plain_text,secret_key);
 
-    printf("cipher text : %x\n",cipher_text);
+    printf("\n\ncipher text : %x\n\n",cipher_text);
 
-    printf("decrypted text : %x\n",spnEnc(cipher_text,secret_key));
+    printf("\n\ndecrypted text : %x\n\n",spnDec(cipher_text,secret_key));
 
     return 0;
     
