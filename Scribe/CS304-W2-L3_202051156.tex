@@ -1,0 +1,55 @@
+\documentclass[11pt]{article}
+\usepackage[hmargin=1in,vmargin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,amsfonts,url,sectsty,framed,tcolorbox,framed}
+\usepackage{multicol}
+\setlength{\columnsep}{0.5cm}
+\usepackage{blindtext}
+\usepackage{tikz}
+
+\newcommand{\pf}{{\bf Proof: }}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newcommand{\qed}{\hfill \rule{2mm}{2mm}}
+
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent
+\rule{\textwidth}{1pt}
+\begin{center}
+{\bf [CS304] Introduction to Cryptography and Network Security}
+\end{center}
+Course Instructor: Dr. Dibyendu Roy \hfill Winter 2022-2023\\
+Scribed by: Rathva Kaushikkumar Sanjaybhai (202051156) \hfill Week : 2 (3nd lecture \#)
+\\
+\rule{\textwidth}{1pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%write here
+\section{Hill Cipher}
+It's an cipher which has a nxn matrix as a key.\\
+
+$a_{ij}\ \epsilon \  Z_{26} $\\\\
+$A = (a_{ij})_{n\times n}$ \\\\
+where , $ A\ is\ Secret key\ and\ has\ to\ be\ invertible.$\\\\
+$M = \{m_1\ m_2\ .\ .\ .\ m_n\}\ \leftarrow \ {Z_{26}}^n\ possible strings. $\\\\
+Here, M is plain text.
+\subsection{Encryption :}
+Cipher text $\ C\ =\ A \cdot M\ =\ (c_1\ c_2\ .\ .\ .\ c_n)$
+\subsection{Decryption :}
+Decrypted text $\ M\ =\ A^{-1}\cdot C$
+\section{Substitution Box}
+$S\ :\ \{A,B,.\ .\ .\,Z\}\ \rightarrow \ \{A,B,\ .\ .\ .\ ,Z\}$ \\\\
+substitution box is Mapping on it self.\\
+Where , $ P\ \rightarrow \ C\ =\ S(P) \ $\\\\
+Here everything is known just Mapping/Sbox is kept secret.\\\\
+If, Mapping is bijective their can be 26! such mapppings.\\
+But if it's not then their are $\ 26^{26}\ $ mappings.\\\\
+Secret key of the Sbox can be found out using brute force/Exhaustive search.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

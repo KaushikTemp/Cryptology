@@ -1,28 +1,33 @@
 #include<stdio.h>
+const int a='a'; //ascii value of a
 
 char Enc(char text,int key){
-        text= ((text-'a'+key)%26) + 'a';
+        text-=a;
+        text =(text+key)%26;
+        text+=a;
     return text;
 }
 char Dec(char text,int key){
-        text= ((text-'a'-key+26)%26) + 'a';
+        text-=a;
+        text = ((text - key) + 26) % 26 ;
+        text+=a;
     return text;
 }
 
 void main(){
-    int key = 'k';
+    int key = 5;
     char pText[] = "kaushik";
     printf("plain text = %s \n",pText);
     int x=7;
     
-    char out[x];
+    char out[x],cipherText[x];
     for(int i=0;i<x;i++){
-        out[i] = Enc(pText[i],key);
+        cipherText[i] = Enc(pText[i],key);
     }
-    printf("Encrypted text : %s\n",out);
+    printf("\nEncrypted text : %s\n",cipherText);
     
     for(int i=0;i<x;i++){
-        out[i] = Dec(pText[i],key);
+        out[i] = Dec(cipherText[i] ,key);
     }
 
     printf("Decrpted text : %s\n",out);
